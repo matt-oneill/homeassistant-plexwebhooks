@@ -30,20 +30,43 @@ CONFIG_SCHEMA = vol.Schema(
 async def handle_webhook(hass, webhook_id, request):
     """Handle webhook callback."""
     _LOGGER.debug('Got plex webhook.')
-
-    data = {}
+    
+    data = None
     
     try:
         reader = await request.multipart()
-        # https://docs.aiohttp.org/en/stable/multipart.html#aiohttp-multipart
+
+        # Loop through multipart data
         while True:
             part = await reader.next()
+
             if part is None:
                 break
-            if part.name == 'payload':
-                data = await part.json()
-    except ValueError:
-        _LOGGER.warn('Issue decoding webhook: ' + part.text())
+
+            # Verify if part contains header
+            try:
+                content_type = part.headers[aiohttp.hdrs.CONTENT_TYPE]
+            except KeyError:
+                _LOGGER.warn('Parsed part did not contain content_type header.')
+                continue
+            else:
+                # Verify if part is of type JSON
+                if content_type == 'application/json':
+                    data = await part.json()
+                    _LOGGER.info('Parsed part of type JSON, stop parsing.')
+                    break
+                else:
+                    _LOGGER.warn('Parsed part not of type JSON.')
+    except:
+        _LOGGER.warn('Request is not of type multipart.')
+        # TODO : Return JSON
+        data = await request.json()
+    else:
+        _LOGGER.info('Multipart request received.')
+    
+    # Abort if no data
+    if not data:
+        _LOGGER.error('No data received.')
         return None
 
     event = data['event']
