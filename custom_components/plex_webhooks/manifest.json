@@ -3,6 +3,7 @@
     "name": "Plex Webhook Event",
     "config_flow": true,
     "documentation": "https://github.com/matt-oneill/homeassistant-plexwebhooks",
+    "issue_tracker": "https://github.com/matt-oneill/homeassistant-plexwebhooks/issues",
     "dependencies": ["webhook"],
     "codeowners": ["@JBassett", "@matt-oneill"],
     "requirements": [],
