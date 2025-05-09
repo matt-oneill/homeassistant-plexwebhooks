@@ -12,7 +12,7 @@ class PlexWebhookConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             # Optionally validate input here
-            return self.async_create_entry(title="Plex Webhook - " + user_input.data["webhook_id"], data=user_input)
+            return self.async_create_entry(title="Plex Webhook - " + user_input["webhook_id"], data=user_input)
 
         return self.async_show_form(
             step_id="user",
