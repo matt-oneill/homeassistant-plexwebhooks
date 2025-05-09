@@ -46,7 +46,7 @@ In addition to the whole plex webhook json being passed (https://support.plex.tv
 Example Music Data:
 ```json
 {
-    "event_type": "PLEX_EVENT",
+    "event_type": "plex_webhook_event",
     "data": {
         "event": "media.stop",
         "user": false,
