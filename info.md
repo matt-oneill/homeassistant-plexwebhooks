@@ -12,7 +12,9 @@
 _Component to integrate with [Plex Webhooks][plex_webhooks]._
 
 ## What this integration adds
-This is a custom component that will take in webhooks from Plex and turn them into events that you can write automations around.  One usecase is when plex starts playing on living room TV dim the kitchen lights and turn out all the living room lights.
+This is a custom component that will take in webhooks from Plex and turn them into events that you can write automations around. 
+This strips the multipart from the webhook which is not supported im home assistant.
+One usecase is when plex starts playing on living room TV dim the kitchen lights and turn out all the living room lights.
 
 ## Installation
 
@@ -22,14 +24,7 @@ This is a custom component that will take in webhooks from Plex and turn them in
 4. Login to plex and add a [webook][plex_webhook_location] with the url of `{{HAS_URL}}/api/webhooks/{{webhook_id}}` where HAS_URL is the url that you can reach Home Assistant and webhook_id is the id you setup in the configuration.yaml
 3. Write awesome automations around the new events!
 
-## Example configuration.yaml
-
-```yaml
-plex_webhooks:
-  webhook_id: plex_webhook
-```
-
-## Configuration options
+## Configuration options from UI
 
 Key | Type | Required | Description
 -- | -- | -- | --
@@ -45,6 +40,7 @@ In addition to the whole plex webhook json being passed (https://support.plex.tv
 
 ***
 
+[homeassistant_plexwebhooks]: https://github.com/matt-oneill/homeassistant-plexwebhooks
 [plex_webhooks]: https://github.com/JBassett/plex_webhooks
 [plex_webhook_location]: https://app.plex.tv/desktop#!/settings/webhooks
 [commits-shield]: https://img.shields.io/github/commit-activity/y/JBassett/plex_webhooks.svg?style=for-the-badge

@@ -26,12 +26,10 @@ This is a custom component that will take in webhooks from Plex and turn them in
 8. Login to plex and add a [webook][plex_webhook_location] with the url of `{{HAS_URL}}/api/webhooks/{{webhook_id}}` where HAS_URL is the url that you can reach Home Assistant and webhook_id is the id you setup in the configuration.yaml
 8. Write awesome automations around the new events!
 
-## Example configuration.yaml
+## Set up from UI
 
-```yaml
-plex_webhooks:
-  webhook_id: plex_webhook
-```
+Settings -> Devices & services -> + ADD INTEGRATION -> Plex Webhooks
+Enter webhook_id
 
 ## Configuration options
 
