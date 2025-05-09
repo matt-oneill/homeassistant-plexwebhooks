@@ -1,9 +1,10 @@
 {
     "domain": "plex_webhooks",
-    "name": "Plex Webhooks",
-    "documentation": "https://github.com/JBassett/plex_webhooks",
+    "name": "Plex Webhook Event",
+    "config_flow": true,
+    "documentation": "https://github.com/matt-oneill/homeassistant-plexwebhooks",
     "dependencies": ["webhook"],
-    "codeowners": ["@JBassett"],
+    "codeowners": ["@JBassett", "@matt-oneill"],
     "requirements": [],
-    "version": "1.0.0"
+    "version": "2.0.0"
 }

@@ -3,29 +3,15 @@ import json
 import logging
 
 import requests
-import voluptuous as vol
 
 import aiohttp
 
 from homeassistant.const import CONF_WEBHOOK_ID
+from homeassistant.components.webhook import async_register, async_generate_url
+from .const import DOMAIN, EVENT
 import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
-
-EVENT_RECEIVED = "PLEX_EVENT"
-
-DOMAIN = "plex_webhooks"
-
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_WEBHOOK_ID): cv.string
-            }
-        )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
 
 async def handle_webhook(hass, webhook_id, request):
     """Handle webhook callback."""
@@ -94,14 +80,14 @@ async def handle_webhook(hass, webhook_id, request):
         data['playerUuid'] = data['Player']['uuid']
     elif event in grabbed:
         _LOGGER.debug('Plex got new media')
-        data['status'] = 'GRABBED'
+        data['status'] = 'NEW'
 
-    hass.bus.async_fire(EVENT_RECEIVED, data)
+    hass.bus.async_fire(EVENT, data)
 
-async def async_setup(hass, config):
+async def async_setup_entry(hass, entry):
     _LOGGER.debug('Initing Plex Webhooks!')
-    webhook_id = config[DOMAIN][CONF_WEBHOOK_ID]
-    hass.components.webhook.async_register(
-        DOMAIN, "Plex", webhook_id, handle_webhook
+    webhook_id = entry.data["webhook_id"]
+    async_register(
+        hass, DOMAIN, "Plex", webhook_id, handle_webhook
     )
     return True

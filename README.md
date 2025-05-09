@@ -9,29 +9,25 @@
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-_Component to integrate with [Plex Webhooks][plex_webhooks]._
+_Component to integrate with [Plex Webhooks][homeassistant_plexwebhooks]._
 
 ## What this integration adds
-This is a custom component that will take in webhooks from Plex and turn them into events that you can write automations around.  One usecase is when plex starts playing on living room TV dim the kitchen lights and turn out all the living room lights.
+This is a custom component that will take in webhooks from Plex and turn them into events that you can write automations around. 
+This strips the multipart from the webhook which is not supported im home assistant.
+One usecase is when plex starts playing on living room TV dim the kitchen lights and turn out all the living room lights.
 
 ## Installation
 
-1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
-2. If you do not have a `custom_components` directory (folder) there, you need to create it.
-3. In the `custom_components` directory (folder) create a new folder called `plex_webhooks`.
-4. Download _all_ the files from the `custom_components/plex_webhooks/` directory (folder) in this repository.
-5. Place the files you downloaded in the new directory (folder) you created.
-6. Update configuration.yaml to include needed config below.
-7. Restart Home Assistant.
-8. Login to plex and add a [webook][plex_webhook_location] with the url of `{{HAS_URL}}/api/webhooks/{{webhook_id}}` where HAS_URL is the url that you can reach Home Assistant and webhook_id is the id you setup in the configuration.yaml
-8. Write awesome automations around the new events!
+1. Click install.
+2. Configure the integration (see below for how)
+3. Restart Home Assistant
+4. Login to plex and add a [webook][plex_webhook_location] with the url of `{{HAS_URL}}/api/webhooks/{{webhook_id}}` where HAS_URL is the url that you can reach Home Assistant and webhook_id is the id you setup in the configuration.yaml
+3. Write awesome automations around the new events!
 
-## Example configuration.yaml
+## Set up from UI
 
-```yaml
-plex_webhooks:
-  webhook_id: plex_webhook
-```
+Settings -> Devices & services -> + ADD INTEGRATION -> Plex Webhooks
+Enter webhook_id
 
 ## Configuration options
 
@@ -50,7 +46,7 @@ In addition to the whole plex webhook json being passed (https://support.plex.tv
 Example Music Data:
 ```json
 {
-    "event_type": "PLEX_EVENT",
+    "event_type": "plex_webhook_event",
     "data": {
         "event": "media.stop",
         "user": false,
@@ -109,6 +105,7 @@ Example Music Data:
 
 ***
 
+[homeassistant_plexwebhooks]: https://github.com/matt-oneill/homeassistant-plexwebhooks
 [plex_webhooks]: https://github.com/JBassett/plex_webhooks
 [plex_webhook_location]: https://app.plex.tv/desktop#!/settings/webhooks
 [commits-shield]: https://img.shields.io/github/commit-activity/y/JBassett/plex_webhooks.svg?style=for-the-badge
